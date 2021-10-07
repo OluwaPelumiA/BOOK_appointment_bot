@@ -1,0 +1,94 @@
+version: "2.0"
+
+rules:
+- rule: welcome user
+  conversation_start: true
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: action_setnumber
+  - action: action_checklifesupport
+  - action: action_transferlifesupport
+  - action: outage_form
+  - active_loop: outage_form
+
+- rule: Submit form
+  condition:
+  - active_loop: outage_form
+  steps:
+  - action: outage_form
+  - active_loop: null
+  - action: action_submitoutage
+  - action: anythinelsee_form
+  - active_loop: anythinelsee_form
+
+
+- rule: Submit else form
+  condition:
+  - active_loop: anythinelsee_form
+  steps:
+  - action: anythinelsee_form
+  - active_loop: null
+  - action: utter_thankyou
+
+- rule: holding
+  condition: 
+  - active_loop: outage_form
+  steps:
+  - intent: hold
+  - action: utter_hold
+
+- rule: holding else
+  condition:
+  - active_loop: anythinelsee_form
+  steps:
+  - intent: hold
+  - action: utter_hold
+
+- rule: resume
+  condition: 
+  - active_loop: outage_form
+  steps:
+  - intent: affirm
+  - action: outage_form
+  - active_loop: outage_form
+
+- rule: resume el
+  condition: 
+  - active_loop: anythinelsee_form
+  steps:
+  - intent: affirm
+  - action: anythinelsee_form
+  - active_loop: anythinelsee_form
+
+# - rule: respond to FAQs
+#   condition:
+#   - active_loop: outage_form
+#   steps:
+#   - intent: faq
+#   - action: utter_faq
+#   - action: outage_form
+
+# - rule: respond to FAQs last
+#   condition:
+#   - active_loop: anythinelsee_form
+#   steps:
+#   - intent: faq
+#   - action: utter_faq
+#   - action: anythinelsee_form
+
+- rule: bot challenge
+  condition:
+  - active_loop: anythinelsee_form
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+  - action: anythinelsee_form
+
+- rule: bot challenge2
+  condition:
+  - active_loop: outage_form
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+  - action: outage_form

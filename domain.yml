@@ -1,0 +1,195 @@
+version: "2.0"
+
+actions:
+  - validate_outage_form
+  - action_setnumber
+  - action_checklifesupport
+  - action_transferlifesupport
+  - action_submitoutage
+
+intents:
+  - bot_challenge
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - repeat
+  - hold
+  - appointment
+  - name_entry
+  - general
+
+slots:
+  life_support:
+    type: bool
+  is_life_threat:
+    type: bool
+  nmi:
+    type: text
+  speak_nmi:
+    type: text
+  confirm_nmi:
+    type: bool
+  phonenumber:
+    type: text
+  name:
+    type: text
+  purposeofcall:
+    type: text
+  allresults:
+    type: text
+  post_code:
+    type: text
+  suburb:
+    type: text
+  street:
+    type: text
+  streetnumber:
+    type: text
+  suburb_confi:
+    type: text
+    initial_value: 0
+  street_confi:
+    type: text
+    initial_value: 0
+  confirm_address:
+    type: bool
+  isoutage:
+    type: bool
+  outagestatus:
+    type: text
+  outagetype:
+    type: text
+  outagecause:
+    type: text
+  outagerestoretime:
+    type: text
+  receive_updates:
+    type: bool
+  anythingelse:
+    type: text
+
+
+forms:
+  outage_form:
+    is_life_threat:
+    - type: from_intent
+      intent: affirm
+      value: true
+    - type: from_intent
+      intent: deny
+      value: false
+    - type: from_intent
+      intent: lifethreat
+      value: true
+    purposeofcall:
+    - type: from_intent
+      intent: outage
+      value: outage
+    nmi:
+    - type: from_entity
+      entity: nmi
+    - type: from_intent
+      intent: deny
+      value: false
+    confirm_nmi:
+    - type: from_intent
+      intent: affirm
+      value: true
+    - type: from_intent
+      intent: deny
+      value: false
+    post_code:
+    - type: from_entity
+      entity: post_code
+    suburb:
+    - type: from_entity
+      entity: suburb
+    street:
+    - type: from_entity
+      entity: street
+    streetnumber:
+    - type: from_entity
+      entity: street
+    confirm_address:
+    - type: from_intent
+      intent: affirm
+      value: true
+    - type: from_intent
+      intent: deny
+      value: false
+    receive_updates:
+    - type: from_intent
+      intent: affirm
+      value: true
+    - type: from_intent
+      intent: deny
+      value: false
+  anythinelsee_form:
+    anythingelse:
+    - type: from_intent
+      intent: deny
+      value: false
+
+responses:
+  utter_hold:
+  - text: "Sure, I am waiting let me know when you want to continue"
+
+  utter_greet:
+  - text: "Welcome to jemena electricity faults and emergencies"
+
+  utter_ask_anythingelse:
+  - text: "is there anything else i can help you with?"
+
+  utter_ask_is_life_threat:
+  - text: "Are you calling about a life threatening situation?"
+
+  utter_ask_purposeofcall:
+  - text: "To direct your call to the right place, i need to know why you are calling. You can say things like. I have no power, or there is a wire down. Please go ahead and tell me now."
+  
+  utter_ask_nmi:
+  - text: "I can locate the property using your 11 digit national meter identifier. please say or enter your 11 digit N M I. if you don't have it, please say i don't have it"
+  
+  utter_ask_confirm_nmi:
+  - text: "We heard <say-as interpret-as='digits'>{nmi}</say-as>, is that right?"
+
+  utter_ask_post_code:
+  - text: "I need to find out where the property is located. Please tell me your postcode."
+  
+  utter_ask_suburb:
+  - text: "Now please tell me your suburb"
+  
+  utter_ask_street:
+  - text: "I need to get the  street name of your property."
+
+  utter_ask_streetnumber:
+  - text: "Finally I need to get the unit number of your property."
+  
+  utter_ask_confirm_address:
+  - text: "we have your property as {streetnumber} {street} {suburb} <say-as interpret-as='digits'>{post_code}</say-as>. Please confirm."
+  
+  utter_thankyou:
+  - condition:
+    - type: slot
+      name: anythingelse
+      value: false
+    text: "Thank you. Have a nice day#HANGUP#"
+
+  - text: "#HANGUP#"
+
+  utter_iamabot:
+  - text: "I am HUNA, a digital human by Humonics Global."
+  
+  utter_ask_receive_updates:
+  - condition:
+    - type: slot
+      name: isoutage
+      value: true
+    text: "we are aware of an outage at your property at {streetnumber} {street} {suburb} <say-as interpret-as='digits'>{post_code}</say-as>. outage cause is {outagecause} and power restoration is expected by {outagerestoretime}. To save you time we can SMS you when we get an update on this outage from our field crew. Would you like to receive these updates?"
+  
+  - text: "we are not aware of an outage at your property at {streetnumber} {street} {suburb} <say-as interpret-as='digits'>{post_code}</say-as>. If you have checked your switchboard and know that your circuit breaker switches are in ON position, please wait to speak to a member of our team.#JEN_faults_priority#"
+
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

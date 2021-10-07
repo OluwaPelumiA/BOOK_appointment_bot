@@ -1,0 +1,429 @@
+version: "2.0"
+
+nlu:
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+    - it is a bot or human?
+    - is this a bot?
+    - are you a actual human?
+
+- intent: greet
+  examples: |
+    - hey
+    - whats up
+    - hello
+    - hi
+    - hi there
+    - good day
+    - hello there
+    - good morning
+    - good evening
+    - morning
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+
+- intent: affirm
+  examples: |
+    - yes
+    - yes.
+    - yeah.
+    - y
+    - yes of course
+    - indeed
+    - i want to get jabbed
+    - i want to get jab
+    - yeah lets get jabbed
+    - of course
+    - that sounds good
+    - correct
+    - seems good
+    - yes seems okay
+    - lets go ahead
+    - fine
+    - cool
+    - fine
+    - okay
+    - ya do it
+    - ya
+    - yea
+    - yeaa
+    - yaa
+    - yes yes
+    - go ahead
+    - umm yes
+    - yes i want to book
+    - i want to book slot
+    - lets continue
+    - please go ahead
+    - lets proceed
+    - let us proceed
+    - go ahead
+    - continue
+    - i am back
+    - please continue
+    - i want to book
+    - yes i have got moderna
+    - yes i got
+    - i am available
+    - yes i am available
+    - yes available
+    - yes i will be available
+    - yes available on that day
+    - yes i'll be available
+    - yes available for 2 hours in morning
+    - yes i am only available in morning
+    - yes but only in evening
+    - Yeah that's correct.
+    - thats correct
+    - yes that is correct
+    - das correct
+    - that is good
+    - that is correct
+    - yeah
+    - that's correct
+    - correct
+    - yeah correct
+    - correct
+    - gotcha
+    - yes please
+    - go ahead
+    - yes please go ahead
+    - sure lets go ahead
+    - yea book
+    - yes book
+    - okay lets book
+    - yes its okay
+    - fine
+    - perfect
+    - terrific
+    - very good
+    - thats fine We can schedule him for cleaning
+    - ok please schedule him
+    - please schedule her
+    - i will be there
+    - she will be there
+    - when do you want to do it
+    - yeah lets do it
+    - lets do it
+    - do it
+    - when are the slots available
+    - when is it available
+    - when is slot available
+    - when can you do it earliest
+    - can you do it for
+    - can you book it for
+    - yes book it for
+    - yes you can book it
+    - can you do it on thursday
+    - when can you
+    - yes tell me
+    - i am his father tell me
+    - tell me
+    - yes whats up
+    - yes speaking
+    - yes i am here
+    - tell me wassup
+    - alisa speaking tell me
+    - john here
+    - yea john here tell me
+    - this is his mother
+    - this is his father
+    - this is john
+    - this is sandeep
+    - this is soumay
+    - yes this is john
+    - yes tell me
+    - yup
+
+- intent: deny
+  examples: |
+    - no
+    - n
+    - never
+    - I don't think so
+    - don't like that
+    - no way
+    - not really
+    - not currently
+    - about to
+    - about to take
+    - not yet
+    - incorrect
+    - its wrong
+    - no thank you
+    - no that will be all
+    - thank you
+    - i appreciate it
+    - that will be all
+    - thats it bye
+    - cu
+    - good by
+    - cee you later
+    - i dont have it
+    - i not have it
+    - i am not having it
+    - i cannot remember
+    - i dont know
+    - i don't know
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+    - bbye
+    - bye bye
+    - that was it
+    - wrong
+    - its not correct
+    - its incorrect
+    - no its not correct
+    - no its wrong
+    - maybe later
+    - maybe sometime later
+    - no not right now
+    - know
+    - know i do not
+    - not
+    - do not
+    - i dont
+    - i don't
+    - nothing like that
+    - nope
+    - nooo
+    - i not having symptoms
+    - no symptoms as of now
+    - not as of now
+    - no i don't think so
+    - nah i don't
+    - nopes
+    - never
+    - I don't think so
+    - don't like that
+    - no way
+    - not really
+    - not
+    - not present
+    - not available presently
+    - in a meeting currently
+    - he is out for some work
+    - not available
+    - not here
+    - not sure
+    - no not visible
+
+- intent: inform
+  examples: |
+    - anytime in the afternoon is fine.
+    - anytime in the morning would be fine
+    - Do you have anything on Wednesday
+    - Do you have anything on Thursday or Friday
+    - Friday at 11:00 AM
+    - other
+    - show me some other centres
+    - do you have any other option available
+    - can you show some other options
+    - give me other options
+    - this saturday
+    - this friday
+    - coming friday
+    - next friday
+    - this monday
+    - coming monday
+    - next monday
+    - it is 600 133 5345
+    - 600 133 5345
+    - 3982 39281
+    - 391831298123
+    - my mobile number is 928321983
+    - phone number is 9823473214
+    - call is number 329847892143
+    - monday
+    - tuesday
+    - wednesday
+    - book for tomorrow
+    - do you have anything for 2pm on coming friday
+    - thursday
+    - friday
+    - saturday
+    - sunday
+    - next week
+    - coming week
+    - first week of next month
+    - next month
+    - coming month
+    - any other?
+    - other options
+    - do you have other options
+    - can i book any different
+    - i am available for 8 august 2pm
+    - i am available for 19th march 10am
+    - 30th april is fine for me
+    - i am available for 1pm tomorrow
+    - tomorrow 8 pm is okay for me
+    - day after tomorrow i am available
+    - book for 4th september 3pm
+    - book for coming friday 4pm
+    - can you book for this saturday 2pm
+    
+- intent: repeat
+  examples: | 
+    - repeat
+    - please repeat
+    - can you please repeat again
+    - please say again
+    - say it again
+    - i am not getting it
+    - not getting you please say it again
+    - voice is breaking please repeat
+    - could you please repeat
+    - not getting you say it again
+    - i am sorry please repeat it again
+    - repeat it
+    - again repeat
+    - pardon
+    - are you there
+    - what was it again
+    - what did you say?
+    - say it again
+    - i didn't get you
+    - what was you asking
+    - what were you asking
+    - please ask again
+    - can you ask previous question again
+    - what was previous question
+    - ask that again
+    - ask previous question again
+    - sorry i didn't get you
+    - i forgot the question
+    - i forgot what was the question
+    - i m sorry
+    - what was that
+
+- intent: hold
+  examples: |
+    - please wait
+    - wait
+    - hold
+    - please hold
+    - hold for a minute
+    - wait a second
+    - can you please hold for a minute
+    - hold for a second
+    - lets wait
+    - hold on
+    - let me check please wait
+    - wait i am checking
+    - can you hold on a second
+    - lets hold
+    - hold there
+    - hold then
+    - let me check hold
+    - wait i am getting my documents
+    - wait a minute
+    - hold on a second
+    - hold it
+    - i have to check
+    - let me go and check
+    - i'll get back to you
+    - wait a minute
+    - let me check
+    - let me check my documents
+
+
+- intent: appointment
+  examples: |
+    - book appointment
+    - schedule an apartment  tour for me
+    - book me an appointment
+    - view property
+    - book appointment to view properties
+    - schedule for me propert tour
+    - add appointment
+    - i will like to schedule a visit
+    - property view at emaar digital greens 
+    - schedule property visit
+    - is there a way i can tour your available properties
+    - plan a property tour for me 
+    - book a property tour session 
+    - schedule property session
+    - arrange an appointment
+    - arrange a property viewing session
+    - fix me an apartment visitation
+    
+- intent: name_entry
+  examples: |
+    - My name is [Ashish](name)
+    - [ashish](name:Ashish) this side
+    - It's [ashish](name:Ashish)
+    - [ashish](name:Ashish) is my name
+    - [Ashish](name)
+    - [Rahul](name)
+    - [ashish](name:Ashish)
+    - My name is [Harsh](name)
+    - [harsh](name:Harsh) this side
+    - It's [harsh](name:Harsh)
+    - [harsh](name:Harsh) is my name
+    - [Harsh](name)
+    - [Rahul](name)
+    - [harsh](name:Harsh)
+    - It is [Tom](name)
+    - My name is [Bob](name)
+    - my name is [Harsh](name)
+    - name is [Rajesh](name)
+    - my name is [demo](name)
+    - name is [demo](name)
+    - I am [Harsh](name)
+    - I am [Nandan](name)
+    - I am [demo](name)
+    - myself [Harsh](name)
+    - myself [demo](name)
+
+
+- intent: general
+  examples: |
+    - general enquiry
+    - general query
+    - street light is not working
+    - steeet light is broken
+    - someone broke the street light
+    - some vehicle just hit into street light
+    - street light
+    - streetlight
+    - tree fallen
+    - there is a tree fallen
+    - humming lines
+    - the lines around my house is making some noise
+    - is making some noise
+    - electricity line is making some noise
+    - dead animal
+    - there is a dead animal on the street
+
+- intent: other_general
+  examples: |
+    - bill
+    - billing query
+    - i want to know about my bill
+    - why my bill is so high
+    - tell me more about bills
+    - reading
+    - i want to know about my meter reading
+    - connection
+    - i want a new connection
+    - abolishment
+    - i want to abolish my connection
+    - disconnection
+    - i want to disconnect my meter connenction
+    - new connection
+    - please initiate my connection request
+    - i want to know about my meter connection
+
