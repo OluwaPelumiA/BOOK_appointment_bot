@@ -1,10 +1,10 @@
 version: "2.0"
 
 actions:
-  - validate_outage_form
+  - validate_user_form
   - action_setnumber
   - action_checklifesupport
-  - action_transferlifesupport
+  - action_transfer_to_agent
   - action_submitoutage
 
 intents:
@@ -15,15 +15,30 @@ intents:
   - deny
   - repeat
   - hold
+  - agent
   - appointment
   - name_entry
   - general
 
+entities:
+  - email
+  - time
+  - phone-number
+  - date
+  - name
 slots:
-  life_support:
+  speak_to_agent:
     type: bool
-  is_life_threat:
-    type: bool
+  email:
+    type: text
+  time:
+    type: any
+  name:
+    type: unfeaturized
+  property_type:
+    type: text
+  property_location:
+    type: text
   nmi:
     type: text
   speak_nmi:
@@ -54,25 +69,13 @@ slots:
     initial_value: 0
   confirm_address:
     type: bool
-  isoutage:
-    type: bool
-  outagestatus:
-    type: text
-  outagetype:
-    type: text
-  outagecause:
-    type: text
-  outagerestoretime:
-    type: text
-  receive_updates:
-    type: bool
   anythingelse:
     type: text
 
 
 forms:
-  outage_form:
-    is_life_threat:
+  appointment_form:
+    speak_to_agent:
     - type: from_intent
       intent: affirm
       value: true
@@ -80,34 +83,21 @@ forms:
       intent: deny
       value: false
     - type: from_intent
-      intent: lifethreat
+      intent: agent
       value: true
     purposeofcall:
     - type: from_intent
-      intent: outage
-      value: outage
-    nmi:
+      intent: appointment
+      value: appointment
+    email:
     - type: from_entity
-      entity: nmi
-    - type: from_intent
-      intent: deny
-      value: false
-    confirm_nmi:
-    - type: from_intent
-      intent: affirm
-      value: true
-    - type: from_intent
-      intent: deny
-      value: false
-    post_code:
+      entity: email
+    time:
     - type: from_entity
-      entity: post_code
-    suburb:
+      entity: time
+    date:
     - type: from_entity
-      entity: suburb
-    street:
-    - type: from_entity
-      entity: street
+      entity: date
     streetnumber:
     - type: from_entity
       entity: street
@@ -136,24 +126,23 @@ responses:
   - text: "Sure, I am waiting let me know when you want to continue"
 
   utter_greet:
-  - text: "Welcome to jemena electricity faults and emergencies"
+  - text: "Welcome to The Rock RealEstate agency, i am Ricky, your Virtual Assistant.I can help you schedule an appointment for a property check."
 
   utter_ask_anythingelse:
   - text: "is there anything else i can help you with?"
 
-  utter_ask_is_life_threat:
-  - text: "Are you calling about a life threatening situation?"
+  utter_speak_to_agent:
+  - text: "please,wait while i connect you to a live agent"
 
   utter_ask_purposeofcall:
-  - text: "To direct your call to the right place, i need to know why you are calling. You can say things like. I have no power, or there is a wire down. Please go ahead and tell me now."
+  - text: "what is the purpose of your call? You can say things like.schedule an appointment for me to see your latest property.Please go ahead and tell me now."
   
-  utter_ask_nmi:
-  - text: "I can locate the property using your 11 digit national meter identifier. please say or enter your 11 digit N M I. if you don't have it, please say i don't have it"
-  
-  utter_ask_confirm_nmi:
-  - text: "We heard <say-as interpret-as='digits'>{nmi}</say-as>, is that right?"
+  utter_ask_name:
+  - text: "Before scheduling a meeeting,i just need a couple of your details. May i know your name?"
+  utter_ask_confirm_name:
+  - text: "Hi {name} we are thrilled to have you here."
 
-  utter_ask_post_code:
+  utter_ask_email:
   - text: "I need to find out where the property is located. Please tell me your postcode."
   
   utter_ask_suburb:

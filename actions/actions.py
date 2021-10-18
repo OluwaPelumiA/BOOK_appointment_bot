@@ -13,9 +13,9 @@ from datetime import datetime, timedelta
 import string
 import re
 
-class ValidateoutageForm(FormValidationAction):
+class ValidateUSERForm(FormValidationAction):
     def name(self) -> Text:
-        return "validate_outage_form"
+        return "validate_user_form"
 
     async def required_slots(
         self,
@@ -26,7 +26,7 @@ class ValidateoutageForm(FormValidationAction):
     ) -> Optional[List[Text]]:
         return slots_mapped_in_domain
 
-    async def extract_is_life_threat(
+    async def extract_speak_to_agent(
         self,
         dispatcher: CollectingDispatcher,
         tracker: Tracker,
@@ -39,7 +39,7 @@ class ValidateoutageForm(FormValidationAction):
         # print(tracker.current_state())
         return {}
     
-    async def validate_is_life_threat(
+    async def validate_speak_to_agent(
         self,
         slot_value: Any,
         dispatcher: CollectingDispatcher,
@@ -47,7 +47,7 @@ class ValidateoutageForm(FormValidationAction):
         domain: Dict,
     ) -> Dict[Text, Any]:
         if slot_value is True:
-            dispatcher.utter_message("Please wait while we transfer you to one of our team members.#JEN_faults_life_threat#")
+            dispatcher.utter_message("kindly wait while i transfer you to a live agent.#HUNA_speak_to_agent#")
             rdic = {}
             cslots = tracker.current_state()["slots"]
             for sname in cslots:
@@ -76,7 +76,7 @@ class ValidateoutageForm(FormValidationAction):
     ) -> Dict[Text, Any]:
         intent_name = tracker.latest_message.get("intent").get("name")
         switcher = {
-                "lifethreat": "#JEN_faults_life_threat#",
+                "lifethreat": "#HUNA_speak_to_agent#",
                 "priority": "#JEN_faults_priority#",
                 "general": "#JEN_faults_general#",
                 "other_general": "#JEN_Gen_Enq#"
@@ -343,6 +343,72 @@ class ValidateoutageForm(FormValidationAction):
     ) -> Dict[Text, Any]:
         return {}
 
+"""
+    def is_int(string: Text) -> bool:
+        #Check if a string is an integer.
+
+        try:
+            int(string)
+            return True
+        except ValueError:
+            return False
+
+    def validate_cuisine(
+        self,
+        value: Text,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+         #Validate cuisine value.
+
+        if value.lower() in self.cuisine_db():
+            # validation succeeded, set the value of the "cuisine" slot to value
+            return {"cuisine": value}
+        else:
+            dispatcher.utter_message(response="utter_wrong_cuisine")
+            # validation failed, set this slot to None, meaning the
+            # user will be asked for the slot again
+            return {"cuisine": None}
+
+    def validate_num_people(
+        self,
+        value: Text,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        #Validate num_people value.
+
+        if self.is_int(value) and int(value) > 0:
+            return {"num_people": value}
+        else:
+            dispatcher.utter_message(response="utter_wrong_num_people")
+            # validation failed, set slot to None
+            return {"num_people": None}
+"""
+    async def validate_name(
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> Dict[Text, Any]:
+        # if tracker.get_slot(REQUESTED_SLOT) == "name":
+        slot_value = tracker.get_slot("name")
+        if slot_value is not None:
+            if bool(re.search(r'\d', slot_value)):
+                dispatcher.utter_message(text="name cannot contain digits.")
+                return {"name": None}
+            tkns = slot_value.split()
+            if len(tkns) > 4:
+                dispatcher.utter_message(text="name too Long")
+                return {"name": None}
+            return {"name": slot_value}
+        else:
+            return {"name": None}
+
+
 class Actionsubmitoutage(Action):
     def name(self) -> Text:
         return "action_submitoutage"
@@ -352,7 +418,7 @@ class Actionsubmitoutage(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         slots = tracker.current_slot_values()
         if slots.get("is_life_threat") is True:
-            dispatcher.utter_message(text="Transfer to Agent#JEN_faults_life_threat#")
+            dispatcher.utter_message(text="Transfer to Agent#HUNA_speak_to_agent#")
             return []
         elif slots.get("isoutage") is False and slots.get("receive_updates") is True:
             dispatcher.utter_message(text="Transfer to agent#JEN_faults_priority#")
@@ -389,13 +455,13 @@ class ActionCheckLifeSupport(Action):
 
 class ActionTransferLifeSupport(Action):
     def name(self) -> Text:
-        return "action_transferlifesupport"
+        return "action_transfer_to_agent"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-        if tracker.get_slot("life_support") is True:
-            dispatcher.utter_message("Please wait while we transfer you to one of our team members.#JEN_faults_life_threat#")
+        if tracker.get_slot("speak_to_agent") is True:
+            dispatcher.utter_message("kindly, wait while i transfer you to a live agent.#HUNA_speak_to_agent#")
             rdic = {}
             cslots = tracker.current_state()["slots"]
             for sname in cslots:

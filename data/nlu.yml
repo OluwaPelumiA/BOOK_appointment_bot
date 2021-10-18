@@ -38,9 +38,6 @@ nlu:
     - y
     - yes of course
     - indeed
-    - i want to get jabbed
-    - i want to get jab
-    - yeah lets get jabbed
     - of course
     - that sounds good
     - correct
@@ -338,6 +335,17 @@ nlu:
     - wait a minute
     - let me check
     - let me check my documents
+    
+- intent: agent
+  examples: |
+    - connect me directly to agent
+    - speak to agent
+    - speak to customer care
+    - live agent
+    - i will love to speak to  a person
+    - kindly connect me to live agent  
+    - urgent talk 
+    - talk to agent
 
 
 - intent: appointment
